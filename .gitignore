@@ -92,4 +92,7 @@ modules.xml
 # Sonarlint plugin
 .idea/sonarlint
 
+# Build output
+build/
+
 # End of https://www.toptal.com/developers/gitignore/api/intellij+all
