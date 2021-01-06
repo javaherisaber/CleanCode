@@ -1,6 +1,8 @@
 public class MainEntry {
-
-    public static void main(String[] args) {
-        System.out.println("Hello uncle bob!");
+    public static void main() {
+        WriteMessage("Hello uncle Mahdi!");
+    }
+    public void WriteMessage(String message){
+        System.out.println(message);
     }
 }
