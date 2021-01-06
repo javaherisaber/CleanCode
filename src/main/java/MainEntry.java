@@ -1,6 +1,10 @@
 public class MainEntry {
 
-    public static void main(String[] args) {
-        System.out.println("Hello uncle bob!");
+    public static void main() {
+        printName();
+    }
+
+    public void printName() {
+        System.out.println("Hello abolfazl sadeghi!");
     }
 }
