@@ -2,4 +2,4 @@
 - item
 
 # Functions
-- item
+- remove arguman and chnage print text
