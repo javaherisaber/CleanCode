@@ -1,6 +1,9 @@
 public class MainEntry {
-
-    public static void main(String[] args) {
-        System.out.println("Hello uncle bob!");
+    public static  String WELCOME_MESSAGE = "Hello Mohammad Gholizadeh!";
+    public static void MainEntry() {
+        printMessage(WELCOME_MESSAGE);
     }
+    public void printMessage(String message){
+        System.out.println(message);
+	}
 }
