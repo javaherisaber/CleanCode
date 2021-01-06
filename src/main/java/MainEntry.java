@@ -1,6 +1,7 @@
 public class MainEntry {
 
-    public static void main(String[] args) {
+    public static void main() {
         System.out.println("Hello uncle bob!");
+        
     }
 }
