@@ -9,66 +9,67 @@ package clean.code.chapter16.original;
  * Project Info:  http://www.jfree.org/jcommon/index.html
  *
  * This library is free software; you can redistribute it and/or modify it
-* under the terms of the GNU Lesser General Public License as published by
-* the Free Software Foundation; either version 2.1 of the License, or
-* (at your option) any later version.
-*
-* This library is distributed in the hope that it will be useful, but
-* WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
-* or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
-* License for more details.
-*
-* You should have received a copy of the GNU Lesser General Public
-* License along with this library; if not, write to the Free Software
-* Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
-* USA.
-*
-* [Java is a trademark or registered trademark of Sun Microsystems, Inc.
-* in the United States and other countries.]
-*
-* ---------------
-* SerialDate.java
-* ---------------
-* (C) Copyright 2001-2005, by Object Refinery Limited.
-*
-* Original Author:  David Gilbert (for Object Refinery Limited);
-* Contributor(s):   -;
-*
-* $Id: SerialDate.java,v 1.7 2005/11/03 09:25:17 mungady Exp $
-*
-*
-* Changes (from 11-Oct-2001)
-* --------------------------
-* 11-Oct-2001 : Re-organised the class and moved it to new package
-*               com.jrefinery.date (DG);
-* 05-Nov-2001 : Added a getDescription() method, and eliminated NotableDate
-*               class (DG);
-* 12-Nov-2001 : IBD requires setDescription() method, now that NotableDate
-*               class is gone (DG);  Changed getPreviousDayOfWeek(),
-*               getFollowingDayOfWeek() and getNearestDayOfWeek() to correct
-*               bugs (DG);
-* 05-Dec-2001 : Fixed bug in SpreadsheetDate class (DG);
-* 29-May-2002 : Moved the month constants into a separate interface
-*               (MonthConstants) (DG);
-* 27-Aug-2002 : Fixed bug in addMonths() method, thanks to N???levka Petr (DG);
-* 03-Oct-2002 : Fixed errors reported by Checkstyle (DG);
-* 13-Mar-2003 : Implemented Serializable (DG);
-* 29-May-2003 : Fixed bug in addMonths method (DG);
-* 04-Sep-2003 : Implemented Comparable.  Updated the isInRange javadocs (DG);
-* 05-Jan-2005 : Fixed bug in addYears() method (1096282) (DG);
-*
-*/
+ * under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation; either version 2.1 of the License, or
+ * (at your option) any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ * [Java is a trademark or registered trademark of Sun Microsystems, Inc.
+ * in the United States and other countries.]
+ *
+ * ---------------
+ * SerialDate.java
+ * ---------------
+ * (C) Copyright 2001-2005, by Object Refinery Limited.
+ *
+ * Original Author:  David Gilbert (for Object Refinery Limited);
+ * Contributor(s):   -;
+ *
+ * $Id: SerialDate.java,v 1.7 2005/11/03 09:25:17 mungady Exp $
+ *
+ *
+ * Changes (from 11-Oct-2001)
+ * fixme (1) : changelog is redundant here
+ * --------------------------
+ * 11-Oct-2001 : Re-organised the class and moved it to new package
+ *               com.jrefinery.date (DG);
+ * 05-Nov-2001 : Added a getDescription() method, and eliminated NotableDate
+ *               class (DG);
+ * 12-Nov-2001 : IBD requires setDescription() method, now that NotableDate
+ *               class is gone (DG);  Changed getPreviousDayOfWeek(),
+ *               getFollowingDayOfWeek() and getNearestDayOfWeek() to correct
+ *               bugs (DG);
+ * 05-Dec-2001 : Fixed bug in SpreadsheetDate class (DG);
+ * 29-May-2002 : Moved the month constants into a separate interface
+ *               (MonthConstants) (DG);
+ * 27-Aug-2002 : Fixed bug in addMonths() method, thanks to N???levka Petr (DG);
+ * 03-Oct-2002 : Fixed errors reported by Checkstyle (DG);
+ * 13-Mar-2003 : Implemented Serializable (DG);
+ * 29-May-2003 : Fixed bug in addMonths method (DG);
+ * 04-Sep-2003 : Implemented Comparable.  Updated the isInRange javadocs (DG);
+ * 05-Jan-2005 : Fixed bug in addYears() method (1096282) (DG);
+ *
+ */
 
 import java.io.Serializable;
 import java.text.DateFormatSymbols;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
-import static clean.code.chapter16.original.MonthConstants.*;
 
 /**
  * An abstract class that defines our requirements for manipulating dates,
  * without tying down a particular implementation.
+ * fixme (2): html tags are redundant
  * <p/>
  * Requirement 1 : match at least what Excel does for dates;
  * Requirement 2 : class is immutable;
@@ -85,39 +86,51 @@ import static clean.code.chapter16.original.MonthConstants.*;
  *
  * @author David Gilbert
  */
-public abstract class SerialDate implements Comparable, Serializable, MonthConstants {
+// fixme (3): `Serial` part of the class name is not a good choice in naming
+// => using `DayDate` instead of `SerialDate` is a better option
+public abstract class SerialDate implements Comparable, Serializable,
+        // fixme (5): extending MonthConstants which is tricky, you can add an enum inside this class
+        MonthConstants {
 
   /**
    * For serialization.
    */
+  // fixme (8): I know that all the documents
+  // recommend manual control of this variable, but it seems to me that automatic control
+  // of serialization is a lot safer because we wont forget to change it.
   private static final long serialVersionUID = -293716040467423637L;
 
   /**
    * Date format symbols.
    */
   public static final DateFormatSymbols
-      DATE_FORMAT_SYMBOLS = new SimpleDateFormat().getDateFormatSymbols();
+          DATE_FORMAT_SYMBOLS = new SimpleDateFormat().getDateFormatSymbols();
 
   /**
-   * The serial number for 1 January 1900.
+   * The serial number for 1 January 1900. // fixme (9): this comment is going to be misinformation
+   * // fixme (11): this has nothing to do with current class and is related to SpreadsheetDate, just press Alt + F7
    */
   public static final int SERIAL_LOWER_BOUND = 2;
 
   /**
-   * The serial number for 31 December 9999.
+   * The serial number for 31 December 9999. // fixme (10): this comment is going to be misinformation
+   * // fixme (12): this has nothing to do with current class and is related to SpreadsheetDate, just press Alt + F7
    */
   public static final int SERIAL_UPPER_BOUND = 2958465;
 
   /**
    * The lowest year value supported by this date format.
+   * // fixme (14): this does not belong to current abstract class, should be moved to implementation
    */
   public static final int MINIMUM_YEAR_SUPPORTED = 1900;
 
   /**
    * The highest year value supported by this date format.
+   * // fixme (15): this does not belong to current abstract class, should be moved to implementation
    */
   public static final int MAXIMUM_YEAR_SUPPORTED = 9999;
 
+  // fixme (16): there should be an enum class containing these day related constants
   /**
    * Useful constant for Monday. Equivalent to java.util.Calendar.MONDAY.
    */
@@ -156,37 +169,45 @@ public abstract class SerialDate implements Comparable, Serializable, MonthConst
 
   /**
    * The number of days in each month in non leap years.
+   * fixme (17): redundant comment here
    */
   static final int[] LAST_DAY_OF_MONTH =
-      {0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
+          {0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
 
   /**
    * The number of days in a (non-leap) year up to the end of each month.
+   * fixme (18): redundant comment here
    */
   static final int[] AGGREGATE_DAYS_TO_END_OF_MONTH =
-      {0, 31, 59, 90, 120, 151, 181, 212, 243, 273, 304, 334, 365};
+          {0, 31, 59, 90, 120, 151, 181, 212, 243, 273, 304, 334, 365};
 
   /**
    * The number of days in a year up to the end of the preceding month.
+   * fixme (19): redundant comment here
+   * fixme (22): this is used only in SpreadsheetDate => move it there
    */
   static final int[] AGGREGATE_DAYS_TO_END_OF_PRECEDING_MONTH =
-      {0, 0, 31, 59, 90, 120, 151, 181, 212, 243, 273, 304, 334, 365};
+          {0, 0, 31, 59, 90, 120, 151, 181, 212, 243, 273, 304, 334, 365};
 
   /**
    * The number of days in a leap year up to the end of each month.
+   * fixme (20): redundant comment here
    */
   static final int[] LEAP_YEAR_AGGREGATE_DAYS_TO_END_OF_MONTH =
-      {0, 31, 60, 91, 121, 152, 182, 213, 244, 274, 305, 335, 366};
+          {0, 31, 60, 91, 121, 152, 182, 213, 244, 274, 305, 335, 366};
 
   /**
    * The number of days in a leap year up to the end of the preceding month.
+   * fixme (21): redundant comment here
+   * fixme (23): this is used only in SpreadsheetDate => move it there
    */
   static final int[]
-      LEAP_YEAR_AGGREGATE_DAYS_TO_END_OF_PRECEDING_MONTH =
-      {0, 0, 31, 60, 91, 121, 152, 182, 213, 244, 274, 305, 335, 366};
+          LEAP_YEAR_AGGREGATE_DAYS_TO_END_OF_PRECEDING_MONTH =
+          {0, 0, 31, 60, 91, 121, 152, 182, 213, 244, 274, 305, 335, 366};
 
   /**
    * A useful constant for referring to the first week in a month.
+   * fixme (24): we can move this and five below constants to an enum class
    */
   public static final int FIRST_WEEK_IN_MONTH = 1;
 
@@ -212,6 +233,7 @@ public abstract class SerialDate implements Comparable, Serializable, MonthConst
 
   /**
    * Useful range constant.
+   * fixme (25): move these Include_* constants to a class named DateInterval
    */
   public static final int INCLUDE_NONE = 0;
 
@@ -233,6 +255,7 @@ public abstract class SerialDate implements Comparable, Serializable, MonthConst
   /**
    * Useful constant for specifying a day of the week relative to a fixed
    * date.
+   * fixme (26): These three constants define a range in weekday so move it to WeekdayRange
    */
   public static final int PRECEDING = -1;
 
@@ -250,11 +273,13 @@ public abstract class SerialDate implements Comparable, Serializable, MonthConst
 
   /**
    * A description for the date.
+   * fixme (27): This field is not used anywhere => remove it and it's accessor and mutator
    */
   private String description;
 
   /**
    * Default constructor.
+   * fixme (28): Redundant declaration because class is abstract already!
    */
   protected SerialDate() {
   }
@@ -266,6 +291,7 @@ public abstract class SerialDate implements Comparable, Serializable, MonthConst
    * @param code the code being checked for validity.
    * @return <code>true</code> if the supplied integer code represents a
    *         valid day-of-the-week, and <code>false</code> otherwise.
+   * fixme (29): We can remove this function because we can use Day enum
    */
   public static boolean isValidWeekdayCode(final int code) {
 
@@ -285,6 +311,8 @@ public abstract class SerialDate implements Comparable, Serializable, MonthConst
   }
 
   /**
+   * fixme (30): java doc is not adding worthwhile information => remove javadoc
+   * fixme (33): this method does not really belong here => Move to Day.parse() function
    * Converts the supplied string to a day of the week.
    *
    * @param s a string representing the day of the week.
@@ -293,18 +321,21 @@ public abstract class SerialDate implements Comparable, Serializable, MonthConst
    */
   public static int stringToWeekdayCode(String s) {
 
+    // fixme (31): declaring these variables as final does not do any purpose
     final String[] shortWeekdayNames
-        = DATE_FORMAT_SYMBOLS.getShortWeekdays();
+            = DATE_FORMAT_SYMBOLS.getShortWeekdays();
     final String[] weekDayNames = DATE_FORMAT_SYMBOLS.getWeekdays();
 
     int result = -1;
     s = s.trim();
     for (int i = 0; i < weekDayNames.length; i++) {
-      if (s.equals(shortWeekdayNames[i])) {
+      // TODO (0): 5/1/2021 we just changed equals to equalsIgnoreCase here and 4 lines below
+      // fixme (32): What's the point of duplicate if statements here? we can use || operator
+      if (s.equalsIgnoreCase(shortWeekdayNames[i])) {
         result = i;
         break;
       }
-      if (s.equals(weekDayNames[i])) {
+      if (s.equalsIgnoreCase(weekDayNames[i])) {
         result = i;
         break;
       }
@@ -320,6 +351,7 @@ public abstract class SerialDate implements Comparable, Serializable, MonthConst
    *
    * @param weekday the day of the week.
    * @return a string representing the supplied day-of-the-week.
+   * fixme (34): this method does not really belong here => Move to Day.toString() function
    */
   public static String weekdayCodeToString(final int weekday) {
 
@@ -332,6 +364,7 @@ public abstract class SerialDate implements Comparable, Serializable, MonthConst
    * Returns an array of month names.
    *
    * @return an array of month names.
+   * fixme (36): this method is not used
    */
   public static String[] getMonths() {
 
@@ -345,6 +378,7 @@ public abstract class SerialDate implements Comparable, Serializable, MonthConst
    * @param shortened a flag indicating that shortened month names should
    *                  be returned.
    * @return an array of month names.
+   * fixme (35): function name is not good, it's returning only name of month
    */
   public static String[] getMonths(final boolean shortened) {
 
@@ -363,6 +397,7 @@ public abstract class SerialDate implements Comparable, Serializable, MonthConst
    * @return <code>true</code> if the supplied integer code represents a
    *         valid month.
    */
+  // fixme (6): using Month constant you can get rid of this method because everything is using enum
   public static boolean isValidMonthCode(final int code) {
 
     switch (code) {
@@ -390,9 +425,10 @@ public abstract class SerialDate implements Comparable, Serializable, MonthConst
    *
    * @param code the month code (1-12).
    * @return the quarter that the month belongs to.
-   * @throws java.lang.IllegalArgumentException
+   * @throws IllegalArgumentException
    *
    */
+  // fixme (7): using Month constant you can get rid of this method because everything is using enum
   public static int monthCodeToQuarter(final int code) {
 
     switch (code) {
@@ -414,7 +450,7 @@ public abstract class SerialDate implements Comparable, Serializable, MonthConst
         return 4;
       default:
         throw new IllegalArgumentException(
-            "SerialDate.monthCodeToQuarter: invalid month code.");
+                "SerialDate.monthCodeToQuarter: invalid month code.");
     }
 
   }
@@ -427,6 +463,7 @@ public abstract class SerialDate implements Comparable, Serializable, MonthConst
    *
    * @param month the month.
    * @return a string representing the supplied month.
+   * fixme (37): this function does not belong here => move to Month class and use a better name
    */
   public static String monthCodeToString(final int month) {
 
@@ -444,7 +481,8 @@ public abstract class SerialDate implements Comparable, Serializable, MonthConst
    * @param shortened if <code>true</code> return the abbreviation of the
    *                  month.
    * @return a string representing the supplied month.
-   * @throws java.lang.IllegalArgumentException
+   * @throws IllegalArgumentException
+   * fixme (38): this function does not belong here => move to Month class and use a better name
    */
   public static String monthCodeToString(final int month,
                                          final boolean shortened) {
@@ -452,7 +490,7 @@ public abstract class SerialDate implements Comparable, Serializable, MonthConst
     // check arguments...
     if (!isValidMonthCode(month)) {
       throw new IllegalArgumentException(
-          "SerialDate.monthCodeToString: month outside valid range.");
+              "SerialDate.monthCodeToString: month outside valid range.");
     }
 
     final String[] months;
@@ -477,6 +515,7 @@ public abstract class SerialDate implements Comparable, Serializable, MonthConst
    * @param s the string to parse.
    * @return <code>-1</code> if the string is not parseable, the month of the
    *         year otherwise.
+   * fixme (39): this function does not belong here => move to Month class and use a better name
    */
   public static int stringToMonthCode(String s) {
 
@@ -495,12 +534,14 @@ public abstract class SerialDate implements Comparable, Serializable, MonthConst
 
     // now search through the month names...
     if ((result < 1) || (result > 12)) {
+      // TODO (1, 2): 5/1/2021 just added result = -1 and changed s.equals to s.equalsIgnoreCase at two of below statements
+      result = -1;
       for (int i = 0; i < monthNames.length; i++) {
-        if (s.equals(shortMonthNames[i])) {
+        if (s.equalsIgnoreCase(shortMonthNames[i])) {
           result = i + 1;
           break;
         }
-        if (s.equals(monthNames[i])) {
+        if (s.equalsIgnoreCase(monthNames[i])) {
           result = i + 1;
           break;
         }
@@ -518,6 +559,7 @@ public abstract class SerialDate implements Comparable, Serializable, MonthConst
    * @param code the code being checked for validity.
    * @return <code>true</code> if the supplied integer code represents a
    *         valid week-in-the-month.
+   * fixme (40): redundant method because we moved these constants to WeekInMonth
    */
   public static boolean isValidWeekInMonthCode(final int code) {
 
@@ -541,6 +583,7 @@ public abstract class SerialDate implements Comparable, Serializable, MonthConst
    * @return <code>true</code> if the specified year is a leap year.
    */
   public static boolean isLeapYear(final int yyyy) {
+    // fixme (41): not readable code, also it can be moved to a DateUtil class instead
     if ((yyyy % 4) != 0) {
       return false;
     } else if ((yyyy % 400) == 0) {
@@ -561,6 +604,7 @@ public abstract class SerialDate implements Comparable, Serializable, MonthConst
    *
    * @param yyyy the year (in the range 1900 to 9999).
    * @return the number of leap years from 1900 to the specified year.
+   * fixme (42): this function is used only in SpreadsheetDate class => move it there
    */
   public static int leapYearCount(final int yyyy) {
 
@@ -578,6 +622,7 @@ public abstract class SerialDate implements Comparable, Serializable, MonthConst
    * @param month the month.
    * @param yyyy  the year (in the range 1900 to 9999).
    * @return the number of the last day of the month.
+   * fixme (43): This function does not belong here => move it to Month class
    */
   public static int lastDayOfMonth(final int month, final int yyyy) {
 
@@ -599,6 +644,7 @@ public abstract class SerialDate implements Comparable, Serializable, MonthConst
    * @param days the number of days to add (can be negative).
    * @param base the base date.
    * @return a new date.
+   * fixme (44): this function must be instance method not static
    */
   public static SerialDate addDays(final int days, final SerialDate base) {
 
@@ -617,15 +663,18 @@ public abstract class SerialDate implements Comparable, Serializable, MonthConst
    * @param months the number of months to add (can be negative).
    * @param base   the base date.
    * @return a new date.
+   * fixme (45): this function must be instance method not static
    */
   public static SerialDate addMonths(final int months,
-                                     final SerialDate base) {
+                                      final SerialDate base) {
+    // fixme (46): algorithm and namings are a bit complicated
+    // fixme (47): instead of getYYYY() name use getYear()!
     final int yy = (12 * base.getYYYY() + base.getMonth() + months - 1)
-        / 12;
+            / 12;
     final int mm = (12 * base.getYYYY() + base.getMonth() + months - 1)
-        % 12 + 1;
+            % 12 + 1;
     final int dd = Math.min(
-        base.getDayOfMonth(), SerialDate.lastDayOfMonth(mm, yy)
+            base.getDayOfMonth(), SerialDate.lastDayOfMonth(mm, yy)
     );
     return SerialDate.createInstance(dd, mm, yy);
 
@@ -638,6 +687,7 @@ public abstract class SerialDate implements Comparable, Serializable, MonthConst
    * @param years the number of years to add (can be negative).
    * @param base  the base date.
    * @return A new date.
+   * fixme (48): this function must be instance method not static
    */
   public static SerialDate addYears(final int years, final SerialDate base) {
 
@@ -647,7 +697,7 @@ public abstract class SerialDate implements Comparable, Serializable, MonthConst
 
     final int targetY = baseY + years;
     final int targetD = Math.min(
-        baseD, SerialDate.lastDayOfMonth(baseM, targetY)
+            baseD, SerialDate.lastDayOfMonth(baseM, targetY)
     );
 
     return SerialDate.createInstance(targetD, baseM, targetY);
@@ -662,17 +712,19 @@ public abstract class SerialDate implements Comparable, Serializable, MonthConst
    * @param base          the base date.
    * @return the latest date that falls on the specified day-of-the-week and
    *         is BEFORE the base date.
+   * fixme (49): this function must be instance method not static
    */
   public static SerialDate getPreviousDayOfWeek(final int targetWeekday,
-                                                final SerialDate base) {
+                                                 final SerialDate base) {
 
     // check arguments...
     if (!SerialDate.isValidWeekdayCode(targetWeekday)) {
       throw new IllegalArgumentException(
-          "Invalid day-of-the-week code."
+              "Invalid day-of-the-week code."
       );
     }
 
+    // fixme (50): Use some explaining temporary variables for god sake!
     // find the date...
     final int adjust;
     final int baseDOW = base.getDayOfWeek();
@@ -694,21 +746,24 @@ public abstract class SerialDate implements Comparable, Serializable, MonthConst
    * @param base          the base date.
    * @return the earliest date that falls on the specified day-of-the-week
    *         and is AFTER the base date.
+   * fixme (51): this function must be instance method not static
    */
   public static SerialDate getFollowingDayOfWeek(final int targetWeekday,
-                                                 final SerialDate base) {
+                                                  final SerialDate base) {
 
     // check arguments...
     if (!SerialDate.isValidWeekdayCode(targetWeekday)) {
       throw new IllegalArgumentException(
-          "Invalid day-of-the-week code."
+              "Invalid day-of-the-week code."
       );
     }
 
+    // fixme (52): Use some explaining temporary variables for god sake!
     // find the date...
     final int adjust;
     final int baseDOW = base.getDayOfWeek();
-    if (baseDOW > targetWeekday) {
+    // TODO (3): 5/1/2021 changed below condition from > to >=
+    if (baseDOW >= targetWeekday) {
       adjust = 7 + Math.min(0, targetWeekday - baseDOW);
     } else {
       adjust = Math.max(0, targetWeekday - baseDOW);
@@ -725,26 +780,34 @@ public abstract class SerialDate implements Comparable, Serializable, MonthConst
    * @param base      the base date.
    * @return the date that falls on the specified day-of-the-week and is
    *         CLOSEST to the base date.
+   * fixme (53): this function must be instance method not static
    */
   public static SerialDate getNearestDayOfWeek(final int targetDOW,
-                                               final SerialDate base) {
+                                                final SerialDate base) {
 
     // check arguments...
     if (!SerialDate.isValidWeekdayCode(targetDOW)) {
       throw new IllegalArgumentException(
-          "Invalid day-of-the-week code."
+              "Invalid day-of-the-week code."
       );
     }
 
+    // fixme (54): Use some explaining temporary variables for god sake!
     // find the date...
-    final int baseDOW = base.getDayOfWeek();
-    int adjust = -Math.abs(targetDOW - baseDOW);
-    if (adjust >= 4) {
-      adjust = 7 - adjust;
-    }
-    if (adjust <= -4) {
-      adjust = 7 + adjust;
-    }
+    int delta = targetDOW - base.getDayOfWeek();
+    int positiveDelta = delta + 7;
+    int adjust = positiveDelta % 7;
+    if (adjust > 3)
+      adjust -= 7;
+    // TODO (4): 5/1/2021 below algorithm is wrong and above is correct
+//    final int baseDOW = base.getDayOfWeek();
+//    int adjust = -Math.abs(targetDOW - baseDOW);
+//    if (adjust >= 4) {
+//      adjust = 7 - adjust;
+//    }
+//    if (adjust <= -4) {
+//      adjust = 7 + adjust;
+//    }
     return SerialDate.addDays(adjust, base);
 
   }
@@ -754,10 +817,11 @@ public abstract class SerialDate implements Comparable, Serializable, MonthConst
    *
    * @param base the base date.
    * @return a new serial date.
+   * fixme (55): What's the use of passing current object in argument?
    */
   public SerialDate getEndOfCurrentMonth(final SerialDate base) {
     final int last = SerialDate.lastDayOfMonth(
-        base.getMonth(), base.getYYYY()
+            base.getMonth(), base.getYYYY()
     );
     return SerialDate.createInstance(last, base.getMonth(), base.getYYYY());
   }
@@ -769,6 +833,7 @@ public abstract class SerialDate implements Comparable, Serializable, MonthConst
    *
    * @param count an integer code representing the week-in-the-month.
    * @return a string corresponding to the week-in-the-month code.
+   * fixme (56): Move this function to where it belongs (WeekInMonth)
    */
   public static String weekInMonthToString(final int count) {
 
@@ -784,7 +849,9 @@ public abstract class SerialDate implements Comparable, Serializable, MonthConst
       case SerialDate.LAST_WEEK_IN_MONTH:
         return "Last";
       default:
-        return "SerialDate.weekInMonthToString(): invalid code.";
+        // todo (5): fixed test by throwing exception instead of returning string
+        throw new IllegalArgumentException("SerialDate.weekInMonthToString(): invalid code.");
+//        return "SerialDate.weekInMonthToString(): invalid code.";
     }
 
   }
@@ -807,7 +874,9 @@ public abstract class SerialDate implements Comparable, Serializable, MonthConst
       case SerialDate.FOLLOWING:
         return "Following";
       default:
-        return "ERROR : Relative To String";
+        // todo (6): fixed test by throwing exception instead of returning string
+        throw new IllegalArgumentException("ERROR : Relative To String");
+//        return "ERROR : Relative To String";
     }
 
   }
@@ -822,7 +891,7 @@ public abstract class SerialDate implements Comparable, Serializable, MonthConst
    * @return An instance of {@link SerialDate}.
    */
   public static SerialDate createInstance(final int day, final int month,
-                                          final int yyyy) {
+                                           final int yyyy) {
     return new SpreadsheetDate(day, month, yyyy);
   }
 
@@ -833,6 +902,8 @@ public abstract class SerialDate implements Comparable, Serializable, MonthConst
    * @param serial the serial number for the day (1 January 1900 = 2).
    * @return a instance of SerialDate.
    */
+  // fixme (13): Really?!! current class is abstract and here we are returning one of it's Implementation (SpreadsheetDate)
+  // => abstract class should not know about implementation use ABSTRACT FACTORY pattern and create a DayDateFactory
   public static SerialDate createInstance(final int serial) {
     return new SpreadsheetDate(serial);
   }
@@ -848,8 +919,8 @@ public abstract class SerialDate implements Comparable, Serializable, MonthConst
     final GregorianCalendar calendar = new GregorianCalendar();
     calendar.setTime(date);
     return new SpreadsheetDate(calendar.get(Calendar.DATE),
-        calendar.get(Calendar.MONTH) + 1,
-        calendar.get(Calendar.YEAR));
+            calendar.get(Calendar.MONTH) + 1,
+            calendar.get(Calendar.YEAR));
 
   }
 
@@ -860,6 +931,8 @@ public abstract class SerialDate implements Comparable, Serializable, MonthConst
    *
    * @return the serial number for the date.
    */
+  // fixme (4): This is not a descriptive name, given date is more like offset than serial number
+  //  => more descriptive name might be ordinal
   public abstract int toSerial();
 
   /**
@@ -867,6 +940,7 @@ public abstract class SerialDate implements Comparable, Serializable, MonthConst
    * SerialDate, we need to define a convention for the 'time of day'.
    *
    * @return this as <code>java.util.Date</code>.
+   * fixme (57): Why is this method abstract? it can be implemented here
    */
   public abstract java.util.Date toDate();
 
@@ -895,7 +969,7 @@ public abstract class SerialDate implements Comparable, Serializable, MonthConst
    */
   public String toString() {
     return getDayOfMonth() + "-" + SerialDate.monthCodeToString(getMonth())
-        + "-" + getYYYY();
+            + "-" + getYYYY();
   }
 
   /**
@@ -923,6 +997,7 @@ public abstract class SerialDate implements Comparable, Serializable, MonthConst
    * Returns the day of the week.
    *
    * @return the day of the week.
+   * fixme (58): why is this method abstract? this method can be implemented here
    */
   public abstract int getDayOfWeek();
 
@@ -935,6 +1010,7 @@ public abstract class SerialDate implements Comparable, Serializable, MonthConst
    *
    * @param other the date being compared to.
    * @return the difference between this and the other date.
+   * fixme (59): why is this method abstract? this method can be implemented here
    */
   public abstract int compare(SerialDate other);
 
@@ -945,6 +1021,7 @@ public abstract class SerialDate implements Comparable, Serializable, MonthConst
    * @param other the date being compared to.
    * @return <code>true</code> if this SerialDate represents the same date as
    *         the specified SerialDate.
+   * fixme (60): why is this method abstract? this method can be implemented here
    */
   public abstract boolean isOn(SerialDate other);
 
@@ -955,6 +1032,7 @@ public abstract class SerialDate implements Comparable, Serializable, MonthConst
    * @param other The date being compared to.
    * @return <code>true</code> if this SerialDate represents an earlier date
    *         compared to the specified SerialDate.
+   * fixme (61): why is this method abstract? this method can be implemented here
    */
   public abstract boolean isBefore(SerialDate other);
 
@@ -965,6 +1043,7 @@ public abstract class SerialDate implements Comparable, Serializable, MonthConst
    * @param other the date being compared to.
    * @return <code>true<code> if this SerialDate represents the same date
    *         as the specified SerialDate.
+   * fixme (62): why is this method abstract? this method can be implemented here
    */
   public abstract boolean isOnOrBefore(SerialDate other);
 
@@ -975,6 +1054,7 @@ public abstract class SerialDate implements Comparable, Serializable, MonthConst
    * @param other the date being compared to.
    * @return <code>true</code> if this SerialDate represents the same date
    *         as the specified SerialDate.
+   * fixme (63): why is this method abstract? this method can be implemented here
    */
   public abstract boolean isAfter(SerialDate other);
 
@@ -985,6 +1065,7 @@ public abstract class SerialDate implements Comparable, Serializable, MonthConst
    * @param other the date being compared to.
    * @return <code>true</code> if this SerialDate represents the same date
    *         as the specified SerialDate.
+   * fixme (64): why is this method abstract? this method can be implemented here
    */
   public abstract boolean isOnOrAfter(SerialDate other);
 
@@ -996,6 +1077,7 @@ public abstract class SerialDate implements Comparable, Serializable, MonthConst
    * @param d1 a boundary date for the range.
    * @param d2 the other boundary date for the range.
    * @return A boolean.
+   * fixme (65): why is this method abstract? this method can be implemented here
    */
   public abstract boolean isInRange(SerialDate d1, SerialDate d2);
 
@@ -1009,6 +1091,7 @@ public abstract class SerialDate implements Comparable, Serializable, MonthConst
    * @param include a code that controls whether or not the start and end
    *                dates are included in the range.
    * @return A boolean.
+   * fixme (66): why is this method abstract? this method can be implemented here
    */
   public abstract boolean isInRange(SerialDate d1, SerialDate d2,
                                     int include);
