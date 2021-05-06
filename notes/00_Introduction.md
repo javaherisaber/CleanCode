@@ -1,6 +1,7 @@
 # Introduction
-## How to know if code is dirty
 [[Slide](../slides/00_Introduction.pptx)]
+
+## How to know if code is dirty
 
 When reading someones code, if you find a portion of code ambigious
 you say WTF is this (Use surprise word for public, it's more polite)
