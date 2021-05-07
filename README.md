@@ -1,7 +1,7 @@
 # Clean code scrutiny, A bottom up approach
 Comprehensive abstract for clean code concepts
 
-<img src="img/book_cover.jpg" alt="code quality measurement" width="256" height="455">
+<img src="img/book_cover.jpg" alt="code quality measurement" width="350" height="462">
 
 ## Table of content
 - [Introduction](notes/00_Introduction.md)
