@@ -1,5 +1,4 @@
-# Chapter 2: Meaningful names
-[[Slide](../slides/02_Chapter_2_Meaningful_names.pptx)]
+# Chapter 2: Meaningful names [[Slide](../slides/02_Chapter_2_Meaningful_names.pptx)]
 
 ## Use Intention-Revealing Names
 Using `d` instead of `elapsedTimeInDays`.

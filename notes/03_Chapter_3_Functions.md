@@ -1,5 +1,4 @@
-# Chapter 3: Functions
-[[Slide](../slides/03_Chapter_3_Functions.pptx)]
+# Chapter 3: Functions [[Slide](../slides/03_Chapter_3_Functions.pptx)]
 
 ## Small
 - **Line counts** should not be longer than a **screen size**

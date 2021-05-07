@@ -1,5 +1,4 @@
-# Chapter 1: Clean code
-[[Slide](../slides/01_Chapter_1_Clean_code.pptx)]
+# Chapter 1: Clean code [[Slide](../slides/01_Chapter_1_Clean_code.pptx)]
 
 ## Bad code
 we write bad code because:

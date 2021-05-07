@@ -1,5 +1,4 @@
-# Introduction
-[[Slide](../slides/00_Introduction.pptx)]
+# Introduction [[Slide](../slides/00_Introduction.pptx)]
 
 ## How to know if code is dirty
 
