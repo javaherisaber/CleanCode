@@ -4,7 +4,7 @@ Comprehensive abstract for clean code concepts
 ## Table of content
 - [Introduction](notes/00_Introduction.md)
 - [Chapter 1: Clean code](notes/01_Chapter_1_Clean_code.md)
-- [Chapter 2: Meaningful names]()
+- [Chapter 2: Meaningful names](notes/02_Chapter_2_Meaningful_names.md)
 - [Chapter 3: Functions]()
 - [Chapter 4: Comments]()
 - [Chapter 5: Formatting]()
