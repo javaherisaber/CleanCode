@@ -9,7 +9,7 @@ Comprehensive abstract for clean code concepts
 - [Chapter 2: Meaningful names](notes/02_Chapter_2_Meaningful_names.md)
 - [Chapter 3: Functions](notes/03_Chapter_3_Functions.md)
 - [Chapter 4: Comments](notes/04_Chapter_4_Comments.md)
-- [Chapter 5: Formatting]()
+- [Chapter 5: Formatting](notes/05_Chapter_5_Formatting.md)
 - [Chapter 6: Objects and Data structures]()
 - [Chapter 7: Error handling]()
 - [Chapter 8: Boundaries]()
