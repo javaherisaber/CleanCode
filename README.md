@@ -1,5 +1,5 @@
-# Clean code scrutiny, A bottom up approach
-Comprehensive abstract for clean code concepts
+# Clean Code, A bottom-up approach
+Comprehensive notes for the clean code concepts
 
 <img src="img/book_cover.jpg" alt="code quality measurement" width="200" height="264">
 
